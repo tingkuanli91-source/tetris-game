@@ -40,11 +40,7 @@ const SHAPES = {
   },
 };
 
-const BOARD_WIDTH = 10;
-const BOARD_HEIGHT = 20;
-const PREVIEW_SIZE = 4;
-
-const createEmptyBoard = () => 
+const TetrisGame = () => {
   Array(BOARD_HEIGHT).fill(null).map(() => Array(BOARD_WIDTH).fill(null));
 
 const SHAPE_KEYS = Object.keys(SHAPES);
@@ -243,6 +239,7 @@ const TetrisGame = () => {
   }, [currentPiece, position, board, isPaused, gameOver, isPlaying, checkCollision]);
 
   // 硬降
+  // eslint-disable-next-line no-unused-vars
   const hardDrop = useCallback(() => {
     if (!currentPiece || isPaused || gameOver || !isPlaying) return;
     
@@ -344,9 +341,9 @@ const TetrisGame = () => {
     
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [movePiece, rotatePiece, holdCurrentPiece, gameOver, isPlaying, startGame]);
+  }, [movePiece, rotatePiece, holdCurrentPiece, gameOver, isPlaying, initNextPieces, getRandomPiece, checkCollision]);
 
-  const startGame = () => {
+  const startGame = useCallback(() => {
     setBoard(createEmptyBoard());
     setScore(0);
     setLevel(1);
@@ -367,7 +364,7 @@ const TetrisGame = () => {
       x: Math.floor((BOARD_WIDTH - firstPiece.shape[0].length) / 2), 
       y: firstPiece.key === 'I' ? -1 : 0 
     });
-  };
+  }, [initNextPieces, getRandomPiece]);
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
