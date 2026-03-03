@@ -1,38 +1,194 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
   min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.tetris-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 20px;
+}
+
+.game-title {
+  font-size: 48px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 20px #e94560, 0 0 40px #e94560;
+  letter-spacing: 4px;
+}
+
+.game-wrapper {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(10, 30px);
+  grid-template-rows: repeat(20, 30px);
+  gap: 1px;
+  background: #0a0a1a;
+  border: 3px solid #e94560;
+  border-radius: 8px;
+  padding: 4px;
+  box-shadow: 0 0 30px rgba(233, 69, 96, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.cell {
+  width: 30px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+  transition: all 0.1s ease;
+}
+
+.cell.filled {
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.game-over-overlay,
+.start-overlay,
+.pause-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  gap: 20px;
+  border-radius: 6px;
 }
 
-.App-link {
-  color: #61dafb;
+.game-over-text {
+  font-size: 32px;
+  color: #e94560;
+  font-weight: bold;
+  text-shadow: 0 0 10px #e94560;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.pause-text {
+  font-size: 36px;
+  color: #ffd700;
+  font-weight: bold;
+  text-shadow: 0 0 15px #ffd700;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.start-btn,
+.restart-btn {
+  padding: 16px 40px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(135deg, #e94560, #c73e54);
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+}
+
+.start-btn:hover,
+.restart-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(233, 69, 96, 0.6);
+}
+
+.info-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.info-box {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 16px 24px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.info-label {
+  font-size: 14px;
+  color: #aaa;
+  margin-bottom: 4px;
+}
+
+.info-value {
+  font-size: 28px;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.controls-info {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.controls-title {
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+
+.control-item {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.control-item::before {
+  content: '⬆';
+  margin-right: 8px;
+}
+
+@media (max-width: 600px) {
+  .game-wrapper {
+    flex-direction: column;
+    align-items: center;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .game-board {
+    grid-template-columns: repeat(10, 28px);
+    grid-template-rows: repeat(20, 28px);
+  }
+  
+  .cell {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .game-title {
+    font-size: 32px;
   }
 }
