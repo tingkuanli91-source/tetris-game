@@ -155,16 +155,6 @@ const TetrisGame = () => {
     }
   }, [currentPiece, position, board, isPaused, gameOver, isPlaying, checkCollision]);
 
-  const hardDrop = useCallback(() => {
-    if (!currentPiece || isPaused || gameOver || !isPlaying) return;
-    let dropDistance = 0;
-    while (!checkCollision(currentPiece, { x: position.x, y: position.y + dropDistance + 1 }, board)) dropDistance++;
-    setScore(prev => prev + dropDistance * 2);
-    const newBoard = mergeBoard();
-    const clearedBoard = clearLines(newBoard);
-    setBoard(clearedBoard);
-    spawnPiece();
-  }, [currentPiece, position, board, isPaused, gameOver, isPlaying, checkCollision, mergeBoard, clearLines, spawnPiece]);
 
   const holdCurrentPiece = useCallback(() => {
     if (!canHold || !currentPiece || isPaused || gameOver || !isPlaying) return;
